@@ -1,26 +1,39 @@
 import { createContext, useEffect, useState } from 'react';
 import MbtiDetail from './MbtiDetail';
 import MbtiList from './MbtiList';
-import FecthRestApi from './api/FetchRestApi';
+import FetchRestApi from './api/FetchRestApi';
+import AddMbti from './AddMbti';
 
 export const RestAPIContext = createContext();
+export const selectMbtiContent = createContext();
 
 function App() {
   const [list, setList] = useState([]);
-  const restAPI = new FecthRestApi('http://localhost/ws02/rest/mbti');
+  const [selectMbti, setSelectMbti] = useState(null);
+  const [addMbti, setAddMbti] = useState(false);
 
+  const restAPI = new FetchRestApi('http://localhost/ws02/rest/mbti');
 
   useEffect(() => {
-    restAPI.getAll().then((data) => {
-      setList(data);
-    });
+    restAPI.getAll().then(setList);
   }, []);
 
   return (
     <RestAPIContext.Provider value={restAPI}>
-      <h1>MBTI 관리</h1>
-      <MbtiList list={list} />
-      <MbtiDetail />
+      <selectMbtiContent.Provider value={{selectMbti, setSelectMbti}}>
+        <div className='container mx-auto mt-6'>
+          <MbtiList list={list} addMbti={addMbti} setAddMbti={setAddMbti}/>
+          {
+            addMbti
+            ? (
+              <AddMbti setList={setList} setAddMbti={setAddMbti}/>
+            )
+            : (
+              <MbtiDetail setList={setList}/>
+            )
+          }
+        </div>
+      </selectMbtiContent.Provider>
     </RestAPIContext.Provider>
   );
 }

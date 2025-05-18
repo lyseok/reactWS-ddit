@@ -6,7 +6,7 @@
       /mbti (DELETE)
 */
 
-export default function FecthRestApi(baseUrl) {
+export default function FetchRestApi(baseUrl) {
   const headers = {
     "accept" : "application/json"
   };
