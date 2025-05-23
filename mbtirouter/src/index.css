@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+body {
+  background-image: url("/cat3.png");
+  @apply h-lvh justify-center flex
+}
+
+#root {
+  @apply h-lvh
+}
+
+.test{
+  @apply border-2
+}
+
+.menu-bar a {
+  @apply p-3 border-2 border-amber-200
+}
+
+.active {
+  @apply text-blue-700 text-2xl
+} 
